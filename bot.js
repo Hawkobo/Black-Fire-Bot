@@ -9,9 +9,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
-    console.log(`${file} primed`);
     client.commands.set(command.name, command);
-    console.log(`${file} loaded!`);
 }
 
 client.on('ready', () => {
