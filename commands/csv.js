@@ -60,12 +60,18 @@ module.exports = {
         
         if (args.length != 0) { //filter members by role if provided
             let newMemberSearchGroup = [];
-            let filter = guild.roles.cache.get(getMentionID(client, message, args[0]).id).members;
+            for (mention of args) {
+                let membersWithRole = guild.roles.cache.get(getMentionID(client, message, mention).id).members;
+    
+                membersWithRole.forEach(roleM => {
+                    for (allM of memberSearchGroup) {
+                        if (allM == roleM && !newMemberSearchGroup.includes(roleM))
+                            newMemberSearchGroup.push(roleM);
+                    }
+                });
 
-            filter.forEach(index => {
-                newMemberSearchGroup.push(index);
-            });
-            memberSearchGroup = newMemberSearchGroup;
+                memberSearchGroup = newMemberSearchGroup;
+            }
         }
 
         for (let member of memberSearchGroup) {
